@@ -51,6 +51,15 @@ Una alternativa és instal·lar el programa [explorer++](https://explorerplusplu
 ![rEFInd Boot List](https://i.imgur.com/zDd4sHZ.png) 
 
 
+## Secure Boot
+
+Si l'equip té activat Secure Boot, el procés anterior no us funcionarà, ja que no reconeixerà els binaris de refind com a vàlids.
+
+Per poder-lo instal·lar en un equip amb Secure Boot cal que copieu els arxius que hi ha al document EFI-SecureBoot.zip del repositori dins la carpeta SecureBoot. Aquest document fa servir un programa signat amb les claus de Microsoft per iniciar el procés d'arrencada. 
+
+En el cas de que aquest programa donés un error per no trobar la clau del binari refind, caldria afegir el certificat refind.cer que també es troba al repositori.
+
+Un cop afegida la clau haurieu de poder iniciar refind en un equip amb Secure Boot habilitat, i ides d'ell iniciar un SO qualsevol, fins i tot un disc amb mode legacy.
 
 
 ## Arrencar des d'una shell EFI
