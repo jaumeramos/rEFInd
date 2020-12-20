@@ -57,10 +57,14 @@ Si l'equip té activat Secure Boot, el procés anterior no us funcionarà, ja qu
 
 Per poder-lo instal·lar en un equip amb Secure Boot cal que copieu els arxius que hi ha al document EFI-SecureBoot.zip del repositori dins la carpeta SecureBoot. Aquest document fa servir un programa signat amb les claus de Microsoft per iniciar el procés d'arrencada. 
 
-En el cas de que aquest programa donés un error per no trobar la clau del binari refind, caldria afegir el certificat refind.cer que també es troba al repositori.
 
-Un cop afegida la clau haurieu de poder iniciar refind en un equip amb Secure Boot habilitat, i ides d'ell iniciar un SO qualsevol, fins i tot un disc amb mode legacy.
+Aquest programa tampoc podria arrencar el binari .efi de refind, ja que no coneix la clau amb que s'ha signat, però ens mostrarà una pantalla d'error i permetrà afegir aquesta clau com una clau vàlida, per això caldrà afegir(enroll) el certificat `refind.cer` que també es troba al repositori.
 
+Un cop afegit aquest certificat ja haurieu de poder iniciar refind en un equip amb Secure Boot habilitat, i des d'allí iniciar un SO qualsevol, fins i tot un disc amb MBR i un SO no UEFI.
+
+En aquesta imatge teniu la seqüència de pantalles per acceptar el certificat amb que s'ha signat el binari de refind.
+
+![Afegir clau rEFInd](https://i.imgur.com/EAQ0nmT.png  "Afegir clau rEFInd")
 
 ## Arrencar des d'una shell EFI
 
@@ -79,6 +83,17 @@ cd EFI\BOOT
 bootx64.efi
 ```
 
+## Afegir una shell UEFI en cas que el nostre sistema no en tingui
+
+Alguns equips no porten cap shell UEFI, i en cas d'error a l'arrencar no ens donen cap opció.
+
+Es pot instal·lar de forma senzilla una shell per poder utilitzar en cas d'error i poder arrencar manualment el nostre sistema.
+
+La shell UEFI més utilitzada és la de EDK2 de tianocore ([https://github.com/tianocore/edk2](https://github.com/tianocore/edk2) )
+
+Podeu descarregar el arxiu .efi amb aquesta shell en [aquest link](https://github.com/tianocore/edk2/blob/UDK2018/ShellBinPkg/UefiShell/X64/Shell.efi) aquest link.
+
+Aquest arxiu l'haurieu de posar en una carpeta anomenada `shell` dins de la carpeta EFI a la partició ESP. Cal reanomenar l'arxiu amb el nom `bootx64.efi` per tal que rEFInd el reconegui com un arxiu executable.
 
 ## Links a les eines emprades
 
@@ -98,3 +113,7 @@ bootx64.efi
 
 - Paquet debian per a instal·lar refind a Ubuntu.
 [https://sourceforge.net/projects/refind/](https://sourceforge.net/projects/refind/) 
+
+
+- Shell EDK2 de Tianocore
+[https://github.com/tianocore/edk2/blob/UDK2018/ShellBinPkg/UefiShell/X64/Shell.efi](https://github.com/tianocore/edk2/blob/UDK2018/ShellBinPkg/UefiShell/X64/Shell.efi) 
